@@ -61,4 +61,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return tasks;
     }
 
+    public void deleteTask(Task task) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("tasks", "_id = " + task.getId(), null);
+    }
+
+    public void markTaskAsDone(Task task) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("done", true);
+        db.update("tasks", values, "_id="+task.getId(), null);
+    }
+
 }

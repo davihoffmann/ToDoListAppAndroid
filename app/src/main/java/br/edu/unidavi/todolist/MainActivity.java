@@ -16,7 +16,10 @@ public class MainActivity extends AppCompatActivity {
     private TasksAdapter adapter = new TasksAdapter(new TasksAdapter.OnTaskClickListener() {
         @Override
         public void onClick(Task task) {
-            Toast.makeText(getApplicationContext(), "Touch!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Touch!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), TaskDetailActivity.class);
+            intent.putExtra("task", task);
+            startActivity(intent);
         }
     });
     private DatabaseHelper helper;
