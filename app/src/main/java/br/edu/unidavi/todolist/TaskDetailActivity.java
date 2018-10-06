@@ -7,7 +7,6 @@ import android.widget.Button;
 
 public class TaskDetailActivity extends AppCompatActivity {
 
-    private DatabaseHelper helper;
     private Task task;
 
     @Override
@@ -15,16 +14,18 @@ public class TaskDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
 
-        helper = new DatabaseHelper(getApplicationContext());
+        int id = getIntent().getIntExtra("id", 0);
+        task = TasksStore.getInstance(getApplicationContext()).getTasksDao().findById(id);
 
-        task = getIntent().getParcelableExtra("task");
+        //sem o room
+        //task = getIntent().getParcelableExtra("task");
         setTitle(task.getTitle());
 
         Button buttonDelete = findViewById(R.id.button_delete);
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helper.deleteTask(task);
+                TasksStore.getInstance(getApplicationContext()).getTasksDao().delete(task);
                 finish();
             }
         });
@@ -33,7 +34,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helper.markTaskAsDone(task);
+                TasksStore.getInstance(getApplicationContext()).getTasksDao().update(new Task(task.getId(), task.getTitle(), true));
                 finish();
             }
         });

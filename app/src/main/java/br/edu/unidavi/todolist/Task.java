@@ -1,39 +1,31 @@
 package br.edu.unidavi.todolist;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
-public class Task implements Parcelable {
+@Entity(tableName = "tasks")
+public class Task {
 
-    private final int id;
+    @PrimaryKey(autoGenerate = true)
+    private final Integer id;
     private final String title;
     private final boolean done;
 
-    public Task(int id, String title, boolean done) {
+    @Ignore
+    public Task(String title, boolean done) {
+        this.id = null;
+        this.title = title;
+        this.done = done;
+    }
+
+    public Task(Integer id, String title, boolean done) {
         this.id = id;
         this.title = title;
         this.done = done;
     }
 
-    protected Task(Parcel in) {
-        id = in.readInt();
-        title = in.readString();
-        done = in.readByte() != 0;
-    }
-
-    public static final Creator<Task> CREATOR = new Creator<Task>() {
-        @Override
-        public Task createFromParcel(Parcel in) {
-            return new Task(in);
-        }
-
-        @Override
-        public Task[] newArray(int size) {
-            return new Task[size];
-        }
-    };
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -43,17 +35,5 @@ public class Task implements Parcelable {
 
     public boolean isDone() {
         return done;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(title);
-        dest.writeByte((byte) (done ? 1 : 0));
     }
 }

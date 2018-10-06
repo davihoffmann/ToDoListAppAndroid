@@ -8,14 +8,10 @@ import android.widget.EditText;
 
 public class NewTaskActivity extends AppCompatActivity {
 
-    private DatabaseHelper helper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
-
-        helper = new DatabaseHelper(this);
 
         Button buttonSave = findViewById(R.id.button_save);
         buttonSave.setOnClickListener(new View.OnClickListener() {
@@ -25,7 +21,7 @@ public class NewTaskActivity extends AppCompatActivity {
                 String value = inputNewTask.getText().toString();
                 if(!value.isEmpty()) {
                     //Salvar no Banco de Dados!
-                    helper.createTaslk(value);
+                    TasksStore.getInstance(getApplicationContext()).getTasksDao().insert(new Task(value, false));
                     finish();
                 }
             }
