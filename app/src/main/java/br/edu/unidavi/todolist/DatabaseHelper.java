@@ -41,6 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /*
     public List<Task> fetchTasks() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("tasks", new String[] {
@@ -60,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return tasks;
-    }
+    }*/
 
     public void deleteTask(Task task) {
         SQLiteDatabase db = getWritableDatabase();

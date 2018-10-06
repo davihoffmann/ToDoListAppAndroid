@@ -1,7 +1,11 @@
 package br.edu.unidavi.todolist;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +15,8 @@ import android.view.View;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TasksViewModel tasksViewModel;
 
     private TasksAdapter adapter = new TasksAdapter(new TasksAdapter.OnTaskClickListener() {
         @Override
@@ -26,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tasksViewModel = ViewModelProviders.of(this).get(TasksViewModel.class);
+        tasksViewModel.tasks.observe(this, tasks -> {
+            if(tasks != null) {
+                adapter.setup(tasks);
+            }
+        });
 
         RecyclerView taskList = findViewById(R.id.task_list);
         taskList.setLayoutManager(new LinearLayoutManager(this));
@@ -45,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        List<Task> tasks = TasksStore.getInstance(this).getTasksDao().fetchTaskas();
-        adapter.setup(tasks);
+        //List<Task> tasks = TasksStore.getInstance(this).getTasksDao().fetchTaskas();
+        tasksViewModel.fetchTasks();
     }
 }

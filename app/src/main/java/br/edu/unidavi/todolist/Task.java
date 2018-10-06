@@ -4,24 +4,26 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "tasks")
 public class Task {
 
     @PrimaryKey(autoGenerate = true)
     private final Integer id;
-    private final String data;
+    private final Date data;
     private final String title;
     private final boolean done;
 
     @Ignore
-    public Task(String data, String title, boolean done) {
+    public Task(String title) {
         this.id = null;
-        this.data = data;
+        this.data = new Date();
         this.title = title;
-        this.done = done;
+        this.done = false;
     }
 
-    public Task(Integer id, String data, String title, boolean done) {
+    public Task(Integer id, Date data, String title, boolean done) {
         this.id = id;
         this.data = data;
         this.title = title;
@@ -32,7 +34,7 @@ public class Task {
         return id;
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
@@ -43,4 +45,5 @@ public class Task {
     public boolean isDone() {
         return done;
     }
+
 }
