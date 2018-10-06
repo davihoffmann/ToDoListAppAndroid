@@ -19,7 +19,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         //sem o room
         //task = getIntent().getParcelableExtra("task");
-        setTitle(task.getTitle());
+        setTitle(task.getTitle() + " - " + task.getData());
 
         Button buttonDelete = findViewById(R.id.button_delete);
         buttonDelete.setOnClickListener(new View.OnClickListener() {
@@ -34,7 +34,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TasksStore.getInstance(getApplicationContext()).getTasksDao().update(new Task(task.getId(), task.getTitle(), true));
+                TasksStore.getInstance(getApplicationContext()).getTasksDao().update(new Task(task.getId(), task.getData(), task.getTitle(), true));
                 finish();
             }
         });

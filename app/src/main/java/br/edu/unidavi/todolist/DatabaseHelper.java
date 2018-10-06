@@ -51,6 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while(!cursor.isAfterLast()){
             Task task = new Task(
                     cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("data")),
                     cursor.getString(cursor.getColumnIndex("title")),
                     cursor.getInt(cursor.getColumnIndex("done")) == 1
             );

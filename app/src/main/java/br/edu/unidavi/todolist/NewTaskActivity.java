@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class NewTaskActivity extends AppCompatActivity {
 
     @Override
@@ -19,9 +22,14 @@ public class NewTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText inputNewTask = findViewById(R.id.input_new_task);
                 String value = inputNewTask.getText().toString();
+
+                SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
+                Date data = new Date();
+                String dataFormatada = formataData.format(data);
+
                 if(!value.isEmpty()) {
                     //Salvar no Banco de Dados!
-                    TasksStore.getInstance(getApplicationContext()).getTasksDao().insert(new Task(value, false));
+                    TasksStore.getInstance(getApplicationContext()).getTasksDao().insert(new Task(dataFormatada, value, false));
                     finish();
                 }
             }
