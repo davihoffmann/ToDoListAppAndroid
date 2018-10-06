@@ -20,6 +20,11 @@ public class NewTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_task);
 
         viewModel = ViewModelProviders.of(this).get(TasksViewModel.class);
+        viewModel.success.observe(this, success -> {
+            if(Boolean.TRUE.equals(success)) {
+                finish();
+            }
+        });
 
         Button buttonSave = findViewById(R.id.button_save);
         buttonSave.setOnClickListener(v -> {
@@ -30,7 +35,6 @@ public class NewTaskActivity extends AppCompatActivity {
                 //Salvar no Banco de Dados!
                 //TasksStore.getInstance(getApplicationContext()).getTasksDao().insert(new Task(value));
                 viewModel.insert(new Task(value));
-                finish();
             }
         });
     }

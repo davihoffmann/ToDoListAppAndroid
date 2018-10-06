@@ -26,6 +26,12 @@ public class TaskDetailActivity extends AppCompatActivity {
             }
         });
 
+        viewModel.success.observe(this, success -> {
+            if(Boolean.TRUE.equals(success)) {
+                finish();
+            }
+        });
+
         int id = getIntent().getIntExtra("id", 0);
         //task = TasksStore.getInstance(getApplicationContext()).getTasksDao().findById(id);
         viewModel.findTaskById(id);
@@ -40,7 +46,6 @@ public class TaskDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //TasksStore.getInstance(getApplicationContext()).getTasksDao().delete(task);
                 viewModel.delete(task);
-                finish();
             }
         });
 
@@ -50,7 +55,6 @@ public class TaskDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //TasksStore.getInstance(getApplicationContext()).getTasksDao().update(new Task(task.getId(), task.getData(), task.getTitle(), true));
                 viewModel.update(new Task(task.getId(), task.getData(), task.getTitle(), true));
-                finish();
             }
         });
     }
